@@ -5,10 +5,10 @@ const Header = () => {
         <>
             <nav className="navbar">
                 <ul>
-                    <li>
+                    <li className="linkLi">
                         <Link to='/'>Post</Link>
                     </li>
-                    <li>
+                    <li className="linkLi">
                         <Link to='/user'>User</Link>
                     </li>
                 </ul>

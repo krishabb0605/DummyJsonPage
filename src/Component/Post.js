@@ -1,55 +1,53 @@
-import React from 'react'
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Post() {
   const navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [userData, setUserData] = useState(null);
+
+  async function fetchData() {
+    try {
+      const responseOfData = await fetch('https://dummyjson.com/posts');
+      const responseOfUsers = await fetch('https://dummyjson.com/users');
+      const postData = await responseOfData.json();
+      const userData = await responseOfUsers.json();
+
+      setData(postData);
+      setUserData(userData)
+
+    } catch (error) {
+      console.log("Error in fetching : ", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className='container'>
       <div className='card'>
-
-        <div className="postData m-3 p-3" onClick={() => navigate("/comment")}>
-          <div className="postContent card-body">
-            <h4 className="postHeading card-title">
-              Heading
-            </h4>
-            <div className="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis eius cum aspernatur debitis esse ut pariatur consequatur, maxime nemo rem quas, quam reiciendis deleniti ratione commodi optio. Maiores, id voluptate.</div>
+        {data && data.posts.map((postData, index) => (
+          <div key={index} className="postData m-3 p-3" onClick={() => navigate('comment')}>
+            <div className="postContent card-body">
+              <h4 className="postHeading card-title">
+                <li> {postData.title}</li>
+              </h4>
+              <div className="card-text">
+                {postData.body}
+              </div>
+            </div>
+            <div className="postUserName card-footer text-end">
+              {userData && userData.users.find(user => user.id === postData.userId)
+                ? `- By ${userData.users.find(user => user.id === postData.userId).firstName}`
+                : 'Unknown'}
+            </div>
           </div>
-          <div className="postUserName card-footer text-end">
-            - By krisha
-          </div>
-        </div>
-
-        <div className="postData m-3 p-3">
-          <div className="postContent card-body">
-            <h4 className="postHeading card-title">
-              Heading
-            </h4>
-            <div className="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis eius cum aspernatur debitis esse ut pariatur consequatur, maxime nemo rem quas, quam reiciendis deleniti ratione commodi optio. Maiores, id voluptate.</div>
-          </div>
-          <div className="postUserName card-footer text-end">
-            - By krisha
-          </div>
-        </div>
-
-        <div className="postData m-3 p-3">
-          <div className="postContent card-body">
-            <h4 className="postHeading card-title">
-              Heading
-            </h4>
-            <div className="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis eius cum aspernatur debitis esse ut pariatur consequatur, maxime nemo rem quas, quam reiciendis deleniti ratione commodi optio. Maiores, id voluptate.</div>
-          </div>
-          <div className="postUserName card-footer text-end">
-            - By krisha
-          </div>
-        </div>
-        
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default Post
+export default Post;
