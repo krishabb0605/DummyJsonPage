@@ -1,0 +1,35 @@
+ul {
+    list-style-type: none;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    background-color: #b3d3d3;
+    display: block;
+    padding: 8px 16px;
+    margin: 8px;
+    text-decoration: none;
+    border-radius: 24px;
+    color: black;
+}
+
+li a:hover {
+    background-color: rgb(188, 198, 247);
+    font-weight: bold;
+}
+
+.postData,
+.commentData,
+.postDataDetail {
+    border: 1px solid #00000061
+}
+
+.postData:hover,
+.commentData:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+    font-weight: bold;
+}
