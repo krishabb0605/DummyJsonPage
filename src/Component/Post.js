@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 function Post() {
   const navigate = useNavigate();
+  const handlePostClick = (postId) => {
+    navigate(`/comment/${postId}`);
+  };
   const [data, setData] = useState(null);
   const [userData, setUserData] = useState(null);
 
@@ -12,7 +15,6 @@ function Post() {
       const responseOfUsers = await fetch('https://dummyjson.com/users');
       const postData = await responseOfData.json();
       const userData = await responseOfUsers.json();
-
       setData(postData);
       setUserData(userData)
 
@@ -29,7 +31,7 @@ function Post() {
     <div className='container'>
       <div className='card'>
         {data && data.posts.map((postData, index) => (
-          <div key={index} className="postData m-3 p-3" onClick={() => navigate('comment')}>
+          <div key={index} className="postData m-3 p-3" onClick={() => handlePostClick(postData.id)}>
             <div className="postContent card-body">
               <h4 className="postHeading card-title">
                 <li> {postData.title}</li>

@@ -13,7 +13,7 @@ function App() {
           <Route path="/" element={<Header />}>
             <Route index element={<Post />} />
             <Route path="user" element={<Users />} />
-            <Route path="/comment" element={<Comment />} />
+            <Route path="comment/:postId" element={<Comment />} />
           </Route>
         </Routes>
       </BrowserRouter>
