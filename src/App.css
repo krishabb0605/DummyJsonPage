@@ -1,23 +1,25 @@
+body {
+    background-color: #e7f6fb;
+}
+
 ul {
     list-style-type: none;
 }
 
-li {
+.linkLi {
     float: left;
 }
 
-li a {
-    background-color: #b3d3d3;
+.linkLi a {
+    font-size: 20px;
     display: block;
-    padding: 8px 16px;
-    margin: 8px;
+    padding: 8px 12px;
+    margin: 0px 12px;
     text-decoration: none;
-    border-radius: 24px;
     color: black;
 }
 
-li a:hover {
-    background-color: rgb(188, 198, 247);
+.linkLi a:hover {
     font-weight: bold;
 }
 
@@ -32,4 +34,22 @@ li a:hover {
     cursor: pointer;
     background-color: aliceblue;
     font-weight: bold;
+
+}
+
+.active {
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+
+.navbar {
+    /* background-color: #111871; */
+    /* background-color: white; */
+    box-shadow: 4px 4px rgb(214, 248, 250);
+    border-radius: 8px;
+    margin: 16px;
+}
+
+ul {
+    margin: 0 !important;
 }
