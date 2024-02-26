@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <>
             <nav className="navbar">
-                <ul>
+                <ul className="ul">
                     <li className="linkLi">
                         <NavLink to='/'>Post</NavLink>
                     </li>
