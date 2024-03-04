@@ -13,7 +13,7 @@ function Addpost({ onAddPost }) {
     }));
   };
 
-  function addComment(event) {
+  function addPostData(event) {
     event.preventDefault();
     onAddPost(formData);
     setFormData({ data: "", title: "" });
@@ -23,7 +23,7 @@ function Addpost({ onAddPost }) {
     <div>
       <div className="add-post p-3 m-3">
         <h5 className="text-decoration-underline">Add posts !!</h5>
-        <form className="d-flex align-items-center" onSubmit={addComment}>
+        <form className="d-flex align-items-center" onSubmit={addPostData}>
           <div>
             <label htmlFor="title" className="fs-4 ">
               Title :

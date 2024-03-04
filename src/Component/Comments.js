@@ -41,10 +41,10 @@ function Comments() {
         const responseOfPost = await fetch(
           `https://dummyjson.com/posts/${postId}`
         );
+        
         const pData = await responseOfPost.json();
-        setPostData(pData);
-
         const userId = pData.userId;
+
         const responseOfUsers = await fetch(
           `https://dummyjson.com/users/${userId}`
         );
@@ -79,11 +79,13 @@ function Comments() {
           }),
         }
       );
+
       const newComment = await responseOfComments.json();
       console.log("data : ", newComment);
       setCommentData((prevCommentData) =>
         prevCommentData ? [...prevCommentData, newComment] : [newComment]
       );
+ 
       setDisable(false);
     } catch (error) {
       setError("Error while adding comment");

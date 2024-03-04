@@ -7,7 +7,9 @@ import Addpost from "./AddPost";
 function Posts() {
   const [postData, setPostData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isEdit, setIsEdit] = useState(false);
+  const [editIndex, setEditIndex] = useState(-1);
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedBody, setEditedBody] = useState("");
   const [error, setError] = useState();
 
   const navigate = useNavigate();
@@ -59,9 +61,10 @@ function Posts() {
           userId: 5,
         }),
       });
-      const newPost = await responseOfPosts.json();
 
+      const newPost = await responseOfPosts.json();
       newPost.username = "Krisha";
+
       setPostData([...postData, newPost]);
     } catch (error) {
       setError("Error while adding post");
@@ -85,15 +88,39 @@ function Posts() {
     }
   };
 
-  const handleEdit = (event, postId) => {
+  const handleEdit = (event, post) => {
     event.stopPropagation();
-    setIsEdit(!isEdit);
-    console.log("Edit ...", postId);
+    setEditIndex(post.id);
+    setEditedTitle(post.title);
+    setEditedBody(post.body);
+    console.log("Edit ...", post.id);
   };
-  const handleSave = (event, postId) => {
+
+  const handleSave = async (event, postId) => {
     event.stopPropagation();
-    setIsEdit(!isEdit);
-    console.log("Save ...", postId);
+    setEditIndex(-1);
+    try {
+      const response = await fetch(`https://dummyjson.com/posts/${postId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: editedTitle,
+        }),
+      });
+
+      const updatedPost = {
+        ...postData.find((post) => post.id === postId),
+        title: editedTitle,
+        body: editedBody,
+      };
+      
+      setPostData(
+        postData.map((post) => (post.id === postId ? updatedPost : post))
+      );
+
+    } catch (error) {
+      console.error("Error updating title:", error);
+    }
   };
 
   if (isLoading) {
@@ -133,18 +160,31 @@ function Posts() {
             <div
               key={postData.id}
               className="post-data m-3 p-3 w-100"
-              onClick={() => handlePostClick(postData.id)}
+              // onClick={() => handlePostClick(postData.id)}
             >
               <div className="post-content card-body p-3 ">
                 <h4 className="post-heading card-title">
-                  {postData.id}. {postData.title}
-                  {!isEdit ? (
+                  {postData.id}.
+                  {editIndex !== postData.id ? (
+                    postData.title
+                  ) : (
+                    <input
+                      type="text"
+                      value={editedTitle}
+                      onChange={(e) => setEditedTitle(e.target.value)}
+                      className="w-75"
+                    />
+                  )}
+                  {editIndex !== postData.id ? (
                     <i
                       className="fa fa-edit post-edit-btn"
-                      onClick={(event) => handleEdit(event, postData.id)}
+                      onClick={(event) => handleEdit(event, postData)}
                     ></i>
                   ) : (
-                    <i className="fa fa-save post-edit-btn" onClick={(event) => handleSave(event, postData.id)}></i>
+                    <i
+                      className="fa fa-save post-edit-btn"
+                      onClick={(event) => handleSave(event, postData.id)}
+                    ></i>
                   )}
                   <i
                     className="fa fa-trash trash-btn"
@@ -152,7 +192,20 @@ function Posts() {
                   ></i>
                 </h4>
 
-                <div className="card-text">{postData.body}</div>
+                <div className="card-text">
+                  {editIndex !== postData.id ? (
+                    postData.body
+                  ) : (
+                    <textarea
+                      type="text"
+                      value={editedBody}
+                      row="10 "
+                      // col="20"
+                      onChange={(e) => setEditedBody(e.target.value)}
+                      className="w-100"
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="postUser-name card-footer text-end">
