@@ -56,19 +56,16 @@ body {
   top: 0;
   z-index: 1;
   background-color: #e7f6fb;
-  /* width: 100%; */
 }
 
 .user-data {
   height: 150px;
-}
-
-.data1 {
   width: 30%;
   column-gap: 30px;
+  box-shadow: 0 0 10px 2px lightblue;
 }
 
-.card1 {
+.card-data {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
@@ -79,11 +76,7 @@ body {
   box-shadow: 3px 3px 5px lightblue;
 }
 
-.user-data {
-  box-shadow: 0 0 10px 2px lightblue;
-}
-
-.arrow {
+.arrow-up {
   background-color: blue;
   color: white;
   border-radius: 50%;

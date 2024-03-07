@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-function Addpost({ onAddPost }) {
+const Addpost = ({ onAddPost }) => {
   const [formData, setFormData] = useState({
-    data: "",
-    title: "",
+    postTitle: "",
+    postBody: "",
   });
 
   const onValChange = (event) => {
@@ -13,17 +13,17 @@ function Addpost({ onAddPost }) {
     }));
   };
 
-  function addPostData(event) {
+  const hadndlePostData = (event) => {
     event.preventDefault();
     onAddPost(formData);
-    setFormData({ data: "", title: "" });
-  }
+    setFormData({ postTitle: "", postBody: "" });
+  };
 
   return (
-    <div>
+    <div className="container">
       <div className="add-post p-3 m-3">
         <h5 className="text-decoration-underline">Add posts !!</h5>
-        <form className="d-flex align-items-center" onSubmit={addPostData}>
+        <form className="d-flex align-items-center" onSubmit={hadndlePostData}>
           <div>
             <label htmlFor="title" className="fs-4 ">
               Title :
@@ -31,36 +31,35 @@ function Addpost({ onAddPost }) {
             <input
               type="text"
               className="form-control box-shadow m-2 d-inline w-75"
-              id="title"
-              name="title"
-              value={formData.title}
+              name="postTitle"
+              value={formData.postTitle}
               onChange={onValChange}
               required
             />
           </div>
+
           <div className="d-flex flex-grow-1 align-items-center ">
-            <label htmlFor="data" className="me-2">
+            <label htmlFor="data" className="me-3 fs-4">
               Data :
             </label>
             <textarea
-              name="data"
-              id="data"
+              name="postBody"
               cols="20"
               rows="2"
               className="form-control box-shadow d-inline w-75"
-              value={formData.data}
+              value={formData.postBody}
               onChange={onValChange}
               required
             ></textarea>
           </div>
 
           <button className="btn btn-primary h-50" type="submit">
-            Add comment
+            Add new post
           </button>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default Addpost;

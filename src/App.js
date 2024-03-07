@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./Component/Header";
 import Posts from "./Component/Posts";
 import Users from "./Component/Users";
-import Comments from "./Component/Comments";
+import PostDetail from "./Component/PostDetail";
 import UserDetail from "./Component/UserDetail";
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Posts />} />
+          <Route path="/posts/:postId" element={<PostDetail />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/posts/:postId" element={<Comments />} />
           <Route path="/users/:userId" element={<UserDetail />} />
         </Routes>
       </BrowserRouter>

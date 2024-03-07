@@ -8,6 +8,7 @@ const Header = () => {
           <li className="link-li ps-5">
             <NavLink to="/">Posts</NavLink>
           </li>
+
           <li className="link-li">
             <NavLink to="/users">Users</NavLink>
           </li>

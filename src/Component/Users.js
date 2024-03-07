@@ -2,26 +2,30 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loader from "./Images/Rounded blocks.gif";
 import errorSymbol from "./Images/Error.gif";
+import { getAllUsersData } from "../services/users.service";
 
 function User() {
   const navigate = useNavigate();
 
-  const [userData, setUserData] = useState(null);
+  const [usersData, setUsersData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
 
+  // Navigate to userdetail page ...
+
   const userDetail = (userId) => {
-    navigate(`/users/${userId}`, { state: { userdata: userData[userId - 1] } });
+    navigate(`/users/${userId}`, {
+      state: { userdata: usersData[userId - 1] },
+    });
   };
+
+  //  Fetch userdata ...
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const responseOfUsers = await fetch(
-          `https://dummyjson.com/users?limit=100`
-        );
-        const uData = await responseOfUsers.json();
-        setUserData(uData.users);
+        const userDataList = await getAllUsersData();
+        setUsersData(userDataList);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -33,6 +37,8 @@ function User() {
     fetchData();
   }, []);
 
+  // Handle page during fetching data ...
+
   if (isLoading) {
     return (
       <div className="container text-center ">
@@ -40,10 +46,13 @@ function User() {
       </div>
     );
   }
+
+  // Handle page whenever error occurs ...
+
   if (error) {
     return (
       <div className="container">
-        <div className="card card1">
+        <div className="card card-data">
           <marquee>
             <img
               src={errorSymbol}
@@ -59,12 +68,14 @@ function User() {
 
   return (
     <div className="container">
-      <div className="card card1">
-        {userData &&
-          userData.map((userdata, index) => (
+      <div className="card card-data">
+        {/* Display user data ... */}
+        {usersData &&
+          usersData.map((userdata, index) => (
+            // Onclick navigate to userdetail page ...
             <div
               key={index}
-              className="user-data data1 m-3 p-3 pb-0 d-flex flex-column flex-xl-row justify-content-center"
+              className="user-data m-3 p-3 pb-0 d-flex flex-column flex-xl-row justify-content-center"
               onClick={() => userDetail(userdata.id)}
             >
               <div className="user-photo d-flex align-items-center h-100">

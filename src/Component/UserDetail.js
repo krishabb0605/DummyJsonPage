@@ -2,27 +2,27 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import loader from "./Images/Rounded blocks.gif";
 import errorSymbol from "./Images/Error.gif";
+import { getUserDataById } from "../services/users.service";
 
 function UserDetail() {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const data = useLocation();
+  const dataOfLocation = useLocation();
   const [userdata, setUserData] = useState(
-    data.state ? data.state.userdata : null
+    dataOfLocation.state ? dataOfLocation.state.userdata : null
   );
   const [isLoading, setIsLoading] = useState(!userdata);
   const [error, setError] = useState(null);
 
+  // Fetch user data when want to fetch data through URL change
+
   useEffect(() => {
-    async function fetchData() {
+    async function fetchUserData() {
       try {
-        const responseOfUsers = await fetch(
-          `https://dummyjson.com/users/${userId}`
-        );
-        const uData = await responseOfUsers.json();
-        setUserData(uData);
+        const fetchedUserData = await getUserDataById(userId);
+        setUserData(fetchedUserData);
         setIsLoading(false);
-        console.log("Hey")
+        console.log("Hey");
       } catch (error) {
         setIsLoading(false);
         setError("Error while fetching data");
@@ -31,9 +31,11 @@ function UserDetail() {
     }
 
     if (!userdata) {
-      fetchData();
+      fetchUserData();
     }
-  }, [userId, userdata]);
+  }, [userId]);
+
+  // Handle page during fetching data ...
 
   if (isLoading) {
     return (
@@ -42,10 +44,13 @@ function UserDetail() {
       </div>
     );
   }
+
+  // Handle page whenever error occurs ...
+
   if (error) {
     return (
       <div className="container d-flex">
-        <div className="card card1 flex-grow-1 align-items-center">
+        <div className="card card-data flex-grow-1 align-items-center">
           <marquee>
             <img
               src={errorSymbol}
@@ -64,16 +69,21 @@ function UserDetail() {
       </div>
     );
   }
+
   return (
     <div className="container">
-      <div className="card card1 mb-3 w-100">
+      <div className="card card-data mb-3 w-100">
         <div className="p-3 m-3 d-flex flex-column w-100 user-detail">
+          {/* Back to user page ... */}
           <button
             className="btn btn-primary w-25 align-self-end mb-5"
             onClick={() => navigate("/users")}
           >
             Back to page
           </button>
+
+          {/*  Display userData ... */}
+
           {userdata && (
             <div className="d-flex flex-column flex-lg-row gap-5 align-items-center ">
               <div className="image-shadow text-center">
