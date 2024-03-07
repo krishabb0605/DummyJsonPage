@@ -10,13 +10,11 @@ import {
 import { getAllUsersData } from "../services/users.service";
 import loader from "./Images/Rounded blocks.gif";
 import errorSymbol from "./Images/Error.gif";
+import useFetchData from "../hooks/useFetchData";
 
 const Posts = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
   const [isNavigatePage, setIsNavigatePage] = useState(false);
 
-  const [postsData, setPostsData] = useState(null);
   const [editedPostFormData, setEditedPostFormData] = useState({
     postIndex: -1,
     postBody: "",
@@ -36,32 +34,26 @@ const Posts = () => {
     }
   };
 
-  // Set postdata ...
+  const {
+    isLoading,
+    error,
+    setError,
+    data: postsData,
+    setData: setPostsData,
+  } = useFetchData(getAllPostData);
+
+  const { data: usersData } = useFetchData(getAllUsersData);
 
   useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        const postDataList = await getAllPostData();
-        const usersDataList = await getAllUsersData();
-
-        const fetchedPosts = (postDataList.posts || []).map((post) => {
-          const user = usersDataList.find((user) => user.id === post.userId);
-          return {
-            ...post,
-            username: user ? user.username : "Unknown",
-          };
-        });
-
-        setPostsData(fetchedPosts);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        setError("Error while fetching data");
-        console.log("Error in fetching : ", error);
-      }
-    };
-    fetchAllData();
-  }, []);
+    const fetchedPosts = (postsData || []).map((post) => {
+      const user = usersData.find((user) => user.id === post.userId);
+      return {
+        ...post,
+        username: user ? user.username : "Unknown",
+      };
+    });
+    setPostsData(fetchedPosts);
+  }, [usersData]);
 
   // Add post data ...
 

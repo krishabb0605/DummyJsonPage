@@ -3,7 +3,7 @@ export const getAllPostData = async () => {
     "https://dummyjson.com/posts?limit=150"
   );
   const postData = await responseOfPostData.json();
-  return postData;
+  return postData.posts;
 };
 
 export const addPost = async (postDetail) => {

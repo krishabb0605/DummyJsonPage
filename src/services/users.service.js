@@ -7,7 +7,26 @@ export const getAllUsersData = async () => {
 };
 
 export const getUserDataById = async (userId) => {
+  console.log("userId",userId);
   const responseOfUsers = await fetch(`https://dummyjson.com/users/${userId}`);
   const uData = await responseOfUsers.json();
   return uData;
+};
+
+export const searchUsersDataByQuery = async (searchQuery, usersAllData) => {
+  try {
+    let searchData = await fetch(
+      `https://dummyjson.com/users/search?q=${searchQuery}&&limit=100`
+    );
+    let filteredUsersData = await searchData.json();
+    // console.log("Api through filtered data : ", filteredUsersData);
+  } catch (e) {
+    console.log("Error", e);
+  }
+  return usersAllData.filter(
+    (userData) =>
+      userData.firstName.toLowerCase().includes(searchQuery) ||
+      userData.lastName.toLowerCase().includes(searchQuery) ||
+      userData.email.toLowerCase().includes(searchQuery)
+  );
 };

@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loader from "./Images/Rounded blocks.gif";
 import errorSymbol from "./Images/Error.gif";
-import { getAllUsersData } from "../services/users.service";
+import {
+  getAllUsersData,
+  searchUsersDataByQuery,
+} from "../services/users.service";
+import useFetchData from "../hooks/useFetchData";
 
 function User() {
   const navigate = useNavigate();
-
-  const [usersData, setUsersData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
+  
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Navigate to userdetail page ...
 
@@ -21,23 +23,13 @@ function User() {
 
   //  Fetch userdata ...
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const userDataList = await getAllUsersData();
-        setUsersData(userDataList);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        setError("Error while fetching data");
-        console.log("Error : ", error);
-      }
-    }
+  const searchUsersData = (usersAllData) => {
+    let filteredUsersData = searchUsersDataByQuery(searchQuery, usersAllData);
+    return filteredUsersData;
+  };
 
-    fetchData();
-  }, []);
-
-  // Handle page during fetching data ...
+  let { isLoading, error, data: usersData } = useFetchData(getAllUsersData);
+  console.log("heyy", usersData);
 
   if (isLoading) {
     return (
@@ -65,9 +57,16 @@ function User() {
       </div>
     );
   }
-
   return (
     <div className="container">
+      <input
+        type="search"
+        className="form-control my-3"
+        placeholder="Search ..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        autoFocus
+      />
       <div className="card card-data">
         {/* Display user data ... */}
         {usersData &&
@@ -88,7 +87,7 @@ function User() {
               <div className="align-self-center">
                 <h4 className="userName">
                   <i className="fa fa-user me-2"></i>
-                  {userdata.firstName} {userdata.lastName}
+                  {userdata.id} {userdata.firstName} {userdata.lastName}
                 </h4>
                 <i className="fa fa-phone me-2"></i>
                 <i>{userdata.phone}</i>

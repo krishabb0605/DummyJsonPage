@@ -10,60 +10,36 @@ import {
   deletCommentData,
   saveEditedCommentData,
 } from "../services/comments.service";
+import useFetchData from "../hooks/useFetchData";
 
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
-  const dataOfLocation = useLocation();
-  const [postData, setPostData] = useState(
-    dataOfLocation.state ? dataOfLocation.state.postData : null
-  );
-  const [commentsData, setCommentsData] = useState([]);
   const [submitBtnDisable, setSubmitBtnDisable] = useState(false);
   const [editedCommentFormData, setEditedCommentFormData] = useState({
     editedCommentIndex: -1,
     editedCommentData: "",
   });
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  // Fetch all comment data ...
+  const {
+    isLoading,
+    error,
+    setError,
+    data: commentsData,
+    setData: setCommentsData,
+  } = useFetchData(getPostCommentById, postId);
 
+  const { data: postData, setData: setPostData } = useFetchData(
+    getPostDataByID,
+    postId
+  );
+
+  const { data: userData } = useFetchData(getUserDataById, postData.userId);
+  
   useEffect(() => {
-    const fetchCommentData = async () => {
-      try {
-        const commentData = await getPostCommentById(postId);
-        setCommentsData(commentData);
-        setIsLoading(false);
-      } catch (error) {
-        setError("Error while fetching comment data");
-        console.log("Error fetching comment data: ", error);
-      }
-    };
-    fetchCommentData();
-  }, [postId]);
-
-  // Fetch post data and user data when want to fetch data through URL change
-
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        const postDataList = await getPostDataByID(postId);
-        const userDataList = await getUserDataById(postDataList.userId);
-        setPostData({ ...postDataList, username: userDataList.username });
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        setError("Error while fetching data");
-        console.log("Error fetching data: ", error);
-      }
-    };
-
-    if (!postData) {
-      fetchAllData();
-    }
-  }, [postId]);
-
+    setPostData({ ...postData, username: userData.username });
+  }, [userData]);
+  
   // Add comment data ...
 
   const handleAddComment = async (commentDetail) => {

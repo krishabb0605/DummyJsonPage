@@ -3,37 +3,18 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import loader from "./Images/Rounded blocks.gif";
 import errorSymbol from "./Images/Error.gif";
 import { getUserDataById } from "../services/users.service";
+import useFetchData from "../hooks/useFetchData";
 
 function UserDetail() {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const dataOfLocation = useLocation();
-  const [userdata, setUserData] = useState(
-    dataOfLocation.state ? dataOfLocation.state.userdata : null
-  );
-  const [isLoading, setIsLoading] = useState(!userdata);
-  const [error, setError] = useState(null);
 
   // Fetch user data when want to fetch data through URL change
 
-  useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const fetchedUserData = await getUserDataById(userId);
-        setUserData(fetchedUserData);
-        setIsLoading(false);
-        console.log("Hey");
-      } catch (error) {
-        setIsLoading(false);
-        setError("Error while fetching data");
-        console.log("Error : ", error);
-      }
-    }
-
-    if (!userdata) {
-      fetchUserData();
-    }
-  }, [userId]);
+  let { isLoading, error, data: userdata } = useFetchData(
+    getUserDataById,
+    userId
+  );
 
   // Handle page during fetching data ...
 
