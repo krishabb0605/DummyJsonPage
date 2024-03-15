@@ -10,7 +10,7 @@ import useFetchData from "../hooks/useFetchData";
 
 function User() {
   const navigate = useNavigate();
-  
+
   const [searchQuery, setSearchQuery] = useState("");
 
   // Navigate to userdetail page ...
@@ -28,9 +28,19 @@ function User() {
     return filteredUsersData;
   };
 
-  let { isLoading, error, data: usersData } = useFetchData(getAllUsersData);
-  console.log("heyy", usersData);
+  let {
+    isLoading,
+    error,
+    data: usersData,
+    setData: setUserData,
+  } = useFetchData(getAllUsersData);
 
+  useEffect(() => {
+    const serachDatas = async () => {
+      setUserData(await searchUsersData(usersData));
+    };
+    serachDatas();
+  }, [searchQuery]);
   if (isLoading) {
     return (
       <div className="container text-center ">
@@ -38,7 +48,6 @@ function User() {
       </div>
     );
   }
-
   // Handle page whenever error occurs ...
 
   if (error) {
@@ -69,7 +78,7 @@ function User() {
       />
       <div className="card card-data">
         {/* Display user data ... */}
-        {usersData &&
+        {(usersData || []) &&
           usersData.map((userdata, index) => (
             // Onclick navigate to userdetail page ...
             <div
