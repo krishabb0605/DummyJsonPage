@@ -134,6 +134,12 @@ body {
   color: red;
 }
 
+.quote-detail {
+  background-color: aliceblue;
+}
+.quote-data {
+  box-shadow: 0 0 10px 2px #00000061;
+}
 @media screen and (max-width: 1200px) {
   .user-data {
     height: auto;

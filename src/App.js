@@ -5,6 +5,7 @@ import Posts from "./Component/Posts";
 import Users from "./Component/Users";
 import PostDetail from "./Component/PostDetail";
 import UserDetail from "./Component/UserDetail";
+import Quotes from "./Component/Quotes";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/posts/:postId" element={<PostDetail />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:userId" element={<UserDetail />} />
+          <Route path="/quotes" element={<Quotes />} />
         </Routes>
       </BrowserRouter>
     </div>
