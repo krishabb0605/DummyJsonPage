@@ -35,11 +35,11 @@ const PostDetail = () => {
   );
 
   const { data: userData } = useFetchData(getUserDataById, postData.userId);
-  
+
   useEffect(() => {
     setPostData({ ...postData, username: userData.username });
   }, [userData]);
-  
+
   // Add comment data ...
 
   const handleAddComment = async (commentDetail) => {
@@ -143,7 +143,7 @@ const PostDetail = () => {
       >
         Back to page
       </button>
-      <div className="card card-data">
+      <div className="card card-data w-100">
         {/* Display post data ... */}
         {postData && (
           <div className="postData-detail m-3 p-3 w-100">

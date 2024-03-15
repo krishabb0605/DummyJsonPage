@@ -6,6 +6,7 @@ import Users from "./Component/Users";
 import PostDetail from "./Component/PostDetail";
 import UserDetail from "./Component/UserDetail";
 import Quotes from "./Component/Quotes";
+import Recipies from "./Component/Recipies";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:userId" element={<UserDetail />} />
           <Route path="/quotes" element={<Quotes />} />
+          <Route path="/recipies" element={<Recipies />} />
         </Routes>
       </BrowserRouter>
     </div>

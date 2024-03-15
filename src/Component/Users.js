@@ -76,7 +76,7 @@ function User() {
         onChange={(e) => setSearchQuery(e.target.value)}
         autoFocus
       />
-      <div className="card card-data">
+      <div className="card card-data w-100 ">
         {/* Display user data ... */}
         {(usersData || []) &&
           usersData.map((userdata, index) => (

@@ -154,7 +154,7 @@ const Posts = () => {
 
       {/* Display post data ... */}
 
-      <div className="card card-data">
+      <div className="card card-data w-100">
         {postsData &&
           postsData.map((postData) => (
             //  OnClick of post data, navigate to that postDetail page ...
