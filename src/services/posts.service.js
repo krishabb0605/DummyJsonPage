@@ -28,7 +28,7 @@ export const deletePost = async (postId) => {
 };
 
 export const saveEditedPostData = async (editedFormData, postId, postsData) => {
-  const response = await fetch(`https://dummyjson.com/posts/${postId}`, {
+  await fetch(`https://dummyjson.com/posts/${postId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -38,7 +38,7 @@ export const saveEditedPostData = async (editedFormData, postId, postsData) => {
   });
 
   const updatedPost = postsData.map((postData) => {
-    if (postData.id == postId) {
+    if (postData.id === postId) {
       return {
         ...postData,
         title: editedFormData.postTitle,

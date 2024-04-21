@@ -24,7 +24,7 @@ const Addpost = ({ onAddPost }) => {
       <div className="add-post p-3 m-3">
         <h5 className="text-decoration-underline">Add posts !!</h5>
         <form className="d-flex align-items-center" onSubmit={hadndlePostData}>
-          <div>
+          <div className="d-flex flex-grow-1 align-items-center">
             <label htmlFor="title" className="fs-4 ">
               Title :
             </label>
@@ -53,7 +53,7 @@ const Addpost = ({ onAddPost }) => {
             ></textarea>
           </div>
 
-          <button className="btn btn-primary h-50" type="submit">
+          <button className="btn btn-outline-primary h-50" type="submit">
             Add new post
           </button>
         </form>

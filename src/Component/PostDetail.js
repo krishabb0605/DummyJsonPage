@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import AddComments from "./AddComments";
 import loader from "./Images/Rounded blocks.gif";
 import errorSymbol from "./Images/Error.gif";
@@ -104,7 +104,7 @@ const PostDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="container text-center ">
+      <div className="container text-center " style={{ marginTop: "100px" }}>
         <img src={loader} alt="Loading ..." style={{ opacity: 0.5 }} />
       </div>
     );
@@ -127,7 +127,7 @@ const PostDetail = () => {
         </div>
         <button
           className=" float-end m-3 btn btn-primary"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/posts")}
         >
           Back to post page
         </button>
@@ -138,8 +138,9 @@ const PostDetail = () => {
   return (
     <div className="container-fluid">
       <button
-        className="float-end btn btn-primary my-3"
-        onClick={() => navigate("/")}
+        className="float-end btn btn-primary"
+        style={{ margin: "80px 4px 40px 0px" }}
+        onClick={() => navigate("/posts")}
       >
         Back to page
       </button>
@@ -168,7 +169,7 @@ const PostDetail = () => {
                   <div className="card-body">
                     <i className="fa fa-comment me-3"></i>
                     {comment.id}.
-                    {editedCommentFormData.editedCommentIndex == comment.id ? (
+                    {editedCommentFormData.editedCommentIndex === comment.id ? (
                       <input
                         type="text"
                         className="form-control w-75 d-inline ms-3"

@@ -4,6 +4,7 @@ const useFetchData = (handleFetchData, params) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [loginUserData, setLoaginUserData] = useState();
   useEffect(() => {
     async function fetchData() {
       try {
@@ -18,6 +19,14 @@ const useFetchData = (handleFetchData, params) => {
     fetchData();
   }, [handleFetchData, params]);
 
-  return { isLoading, error, setError, data, setData };
+  return {
+    isLoading,
+    error,
+    setError,
+    data,
+    setData,
+    loginUserData,
+    setLoaginUserData,
+  };
 };
 export default useFetchData;

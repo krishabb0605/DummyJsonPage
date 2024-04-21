@@ -40,7 +40,7 @@ function Recipies() {
 
   if (isLoading) {
     return (
-      <div className="container text-center ">
+      <div className="container text-center " style={{ marginTop: "100px" }}>
         <img src={loader} alt="Loading ... " style={{ opacity: 0.5 }} />
       </div>
     );
@@ -79,9 +79,10 @@ function Recipies() {
           <i className="fa fa-search search-icon"></i>
           <input
             type="text"
-            className="form-control p-3 my-3 ms-3 search-field"
+            className="form-control p-3 my-3 ms-0 search-field"
             placeholder="Search ..."
             onChange={(e) => setQuery(e.target.value)}
+            autoFocus
           />
         </div>
         <i className="count">{count}</i>
@@ -91,12 +92,15 @@ function Recipies() {
         ></i>
       </div>
 
-      <div className="card card1-data">
+      <div
+        className="card card1-data justify-content-around"
+        style={{ marginTop: "60px" }}
+      >
         {recipiesData &&
           recipiesData.map((recipieData, index) => (
             <div
               key={index}
-              className="user-data1 data1 m-3 p-3 pb-0 d-flex flex-column flex-xl-row recipie-data"
+              className="user-data1 data1 m-3 p-3 d-flex flex-column flex-xl-row recipie-data"
               onClick={() => addToCart(recipieData)}
             >
               <div className="user-photo d-flex flex-column justify-content-center align-items-center h-100">
@@ -108,7 +112,10 @@ function Recipies() {
                 />
                 <b className="userName">{recipieData.name}</b>
               </div>
-              <div className="align-self-center user-details1 d-flex justify-content-around">
+              <div
+                className="align-self-center user-details1 d-flex justify-content-around"
+                style={{ gap: "30px" }}
+              >
                 <div>
                   <div>
                     <b> Cuisine: </b>

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./Component/Header";
 import Posts from "./Component/Posts";
@@ -7,14 +7,16 @@ import PostDetail from "./Component/PostDetail";
 import UserDetail from "./Component/UserDetail";
 import Quotes from "./Component/Quotes";
 import Recipies from "./Component/Recipies";
+import Login from "./Component/Login";
 
 function App() {
   return (
-    <div className="container-fluid">
+    <div>
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Posts />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/posts" element={<Posts />} />
           <Route path="/posts/:postId" element={<PostDetail />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:userId" element={<UserDetail />} />

@@ -41,9 +41,10 @@ function User() {
     };
     serachDatas();
   }, [searchQuery]);
+
   if (isLoading) {
     return (
-      <div className="container text-center ">
+      <div className="container text-center " style={{ marginTop: "100px" }}>
         <img src={loader} alt="Loading ... " style={{ opacity: 0.5 }} />
       </div>
     );
@@ -67,23 +68,31 @@ function User() {
     );
   }
   return (
-    <div className="container">
-      <input
-        type="search"
-        className="form-control my-3"
-        placeholder="Search ..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        autoFocus
-      />
-      <div className="card card-data w-100 ">
+    <div className="container-fluid p-0">
+      <div className="d-flex justify-content-between main-header">
+        <div className="search-header">
+          <i className="fa fa-search search-icon"></i>
+          <input
+            type="text"
+            className="form-control p-3 my-3 search-field"
+            placeholder="Search ..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            autoFocus
+          />
+        </div>
+      </div>
+      <div
+        className="card card-data justify-content-around w-100 "
+        style={{ marginTop: "56px" }}
+      >
         {/* Display user data ... */}
         {(usersData || []) &&
           usersData.map((userdata, index) => (
             // Onclick navigate to userdetail page ...
             <div
               key={index}
-              className="user-data m-3 p-3 pb-0 d-flex flex-column flex-xl-row justify-content-center"
+              className="user-data m-3 p-3 pb-0 d-flex justify-content-center"
               onClick={() => userDetail(userdata.id)}
             >
               <div className="user-photo d-flex align-items-center h-100">

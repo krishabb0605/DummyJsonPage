@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import loader from "./Images/Rounded blocks.gif";
 import errorSymbol from "./Images/Error.gif";
 import { getUserDataById } from "../services/users.service";
@@ -11,16 +11,17 @@ function UserDetail() {
 
   // Fetch user data when want to fetch data through URL change
 
-  let { isLoading, error, data: userdata } = useFetchData(
-    getUserDataById,
-    userId
-  );
+  let {
+    isLoading,
+    error,
+    data: userdata,
+  } = useFetchData(getUserDataById, userId);
 
   // Handle page during fetching data ...
 
   if (isLoading) {
     return (
-      <div className="container text-center ">
+      <div className="container text-center " style={{ marginTop: "100px" }}>
         <img src={loader} alt="Loading ... " style={{ opacity: 0.5 }} />
       </div>
     );
@@ -52,12 +53,13 @@ function UserDetail() {
   }
 
   return (
-    <div className="container">
-      <div className="card card-data mb-3 w-100">
+    <div className="container" style={{ marginTop: "90px" }}>
+      <div className="card card-data  mb-3 w-100">
         <div className="p-3 m-3 d-flex flex-column w-100 user-detail">
           {/* Back to user page ... */}
           <button
-            className="btn btn-primary w-25 align-self-end mb-5"
+            className="btn btn-primary  align-self-end mb-5"
+            style={{ width: "120px" }}
             onClick={() => navigate("/users")}
           >
             Back to page
@@ -80,7 +82,7 @@ function UserDetail() {
                       </u>
                     </i>
                   </h2>
-                  <div className="d-flex justify-content-around">
+                  <div className="d-flex flex-column flex-sm-row justify-content-around">
                     <div>
                       <p className="card-text">
                         <b>UserName : </b>
@@ -179,16 +181,22 @@ function UserDetail() {
                     </div>
                   </div>
                 </div>
-                <div className="card-footer">
-                  <i className="fa fa-phone me-2"></i>
-                  <i className="me-5">{userdata.phone}</i>
-                  <i className="fa fa-envelope-open me-2"></i>
-                  <i className="me-5">{userdata.email}</i>
-                  <i className="fa fa-map-pin me-2"></i>
-                  <i>
-                    {userdata.address.address} , {userdata.address.city} ,{" "}
-                    {userdata.address.state}
-                  </i>
+                <div className="card-footer d-flex flex-wrap align-items-center justify-content-between">
+                  <div className="d-flex align-items-center">
+                    <i className="fa fa-phone me-2"></i>
+                    <i className="me-5">{userdata.phone}</i>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <i className="fa fa-envelope-open me-2"></i>
+                    <i className="me-5">{userdata.email}</i>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <i className="fa fa-map-pin me-2"></i>
+                    <i>
+                      {userdata.address.address} , {userdata.address.city} ,{" "}
+                      {userdata.address.state}
+                    </i>
+                  </div>
                 </div>
               </div>
             </div>

@@ -14,6 +14,7 @@ import useFetchData from "../hooks/useFetchData";
 
 const Posts = () => {
   const [isNavigatePage, setIsNavigatePage] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [editedPostFormData, setEditedPostFormData] = useState({
     postIndex: -1,
@@ -41,9 +42,20 @@ const Posts = () => {
     data: postsData,
     setData: setPostsData,
   } = useFetchData(getAllPostData);
+  console.log(isLoading);
+  const { data: postsDataToShow } = useFetchData(getAllPostData);
+
+  const handleSearch = (datas) => {
+    return datas.filter((data) =>
+      data.title.toLowerCase().includes(searchQuery)
+    );
+  };
+
+  useEffect(() => {
+    setPostsData(handleSearch(postsDataToShow));
+  }, [searchQuery]);
 
   const { data: usersData } = useFetchData(getAllUsersData);
-
   useEffect(() => {
     const fetchedPosts = (postsData || []).map((post) => {
       const user = usersData.find((user) => user.id === post.userId);
@@ -118,12 +130,12 @@ const Posts = () => {
 
   if (isLoading) {
     return (
-      <div className="container text-center ">
+      <div className="container text-center" style={{ marginTop: "100px" }}>
         <img src={loader} alt="Loading ... " style={{ opacity: 0.5 }} />
       </div>
     );
   }
-
+  console.log(isLoading);
   // Handle page whenever error occurs ...
 
   if (error) {
@@ -140,14 +152,30 @@ const Posts = () => {
   return (
     <div className="container-fluid">
       {/* Redirected to Add post ...*/}
-
-      <a href="#addPost">
+      {/* <SearchData handleSearch={handleSearch} /> */}
+      <div className="d-flex justify-content-between main-header">
+        <div className="search-header">
+          <i className="fa fa-search search-icon"></i>
+          <input
+            type="text"
+            className="form-control p-3 my-3 search-field"
+            placeholder="Search ..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            autoFocus
+          />
+        </div>
+      </div>
+      {/* <a href="#addPost">
         <button className="arrow-down m-3">
           <i className="fa fa-arrow-down"></i>
         </button>
-      </a>
-      <button className="btn btn-primary float-end my-2">
-        <a href="#addPost" className="text-white text-decoration-none">
+      </a> */}
+      <button
+        className="btn btn-outline-info float-end"
+        style={{ margin: "80px 4px 40px 0px" }}
+      >
+        <a href="#addPost" className=" text-decoration-none">
           Add post
         </a>
       </button>

@@ -24,7 +24,7 @@ export const saveEditedCommentData = async (
   editedCommentFormData,
   commentsData
 ) => {
-  const data = await fetch(`https://dummyjson.com/comments/${commentId}`, {
+  await fetch(`https://dummyjson.com/comments/${commentId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

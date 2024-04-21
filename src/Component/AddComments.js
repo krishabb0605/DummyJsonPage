@@ -32,7 +32,7 @@ const AddComments = ({ handleAddComment, disable }) => {
           </div>
 
           <button
-            className=" btn btn-primary h-50"
+            className=" btn btn-outline-primary h-50"
             type="submit"
             disabled={disable}
           >
