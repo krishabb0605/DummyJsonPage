@@ -33,14 +33,12 @@ function UserDetail() {
     return (
       <div className="container d-flex">
         <div className="card card-data flex-grow-1 align-items-center">
-          <marquee>
             <img
               src={errorSymbol}
-              alt="Loading ... "
+              alt="error ... "
               style={{ opacity: 0.5 }}
             />
             {error}
-          </marquee>
         </div>
         <button
           className=" float-end m-3 btn btn-primary"

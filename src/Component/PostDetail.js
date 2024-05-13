@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import AddComments from "./AddComments";
-import loader from "./Images/Rounded blocks.gif";
-import errorSymbol from "./Images/Error.gif";
-import { getPostCommentById, getPostDataByID } from "../services/posts.service";
-import { getUserDataById } from "../services/users.service";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import AddComments from './AddComments';
+import loader from './Images/Rounded blocks.gif';
+import errorSymbol from './Images/Error.gif';
+import { getPostCommentById, getPostDataByID } from '../services/posts.service';
+import { getUserDataById } from '../services/users.service';
 import {
   addCommentData,
   deletCommentData,
   saveEditedCommentData,
-} from "../services/comments.service";
-import useFetchData from "../hooks/useFetchData";
+} from '../services/comments.service';
+import useFetchData from '../hooks/useFetchData';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const PostDetail = () => {
   const [submitBtnDisable, setSubmitBtnDisable] = useState(false);
   const [editedCommentFormData, setEditedCommentFormData] = useState({
     editedCommentIndex: -1,
-    editedCommentData: "",
+    editedCommentData: '',
   });
 
   const {
@@ -51,15 +51,14 @@ const PostDetail = () => {
       );
       setSubmitBtnDisable(false);
     } catch (error) {
-      setError("Error while adding comment");
-      console.log("Error adding comment: ", error);
+      setError('Error while adding comment');
     }
   };
 
   //  Delete comment  data ...
 
   const handleDeleteComment = async (commentId) => {
-    let confirmMsg = window.confirm("Sure you want to delete data ?? ");
+    let confirmMsg = window.confirm('Sure you want to delete data ?? ');
     if (confirmMsg) {
       try {
         deletCommentData(commentId);
@@ -67,8 +66,7 @@ const PostDetail = () => {
           commentsData.filter((comment) => comment.id !== commentId)
         );
       } catch (e) {
-        setError("Error while delete comment");
-        console.log("Error : ", e);
+        setError('Error while delete comment');
       }
     }
   };
@@ -81,7 +79,6 @@ const PostDetail = () => {
       editedCommentIndex: comment.id,
       editedCommentData: comment.body,
     });
-    console.log("Edit ...", comment.id);
   };
 
   const handleSaveComment = async (event, commentId) => {
@@ -95,17 +92,16 @@ const PostDetail = () => {
       );
       setCommentsData(updatedCommentData);
     } catch (e) {
-      console.log("Error : ", e);
+      setError('Error while saving data ...');
     }
-    console.log("Save ...", commentId);
   };
 
   // Handle page during fetching data ...
 
   if (isLoading) {
     return (
-      <div className="container text-center " style={{ marginTop: "100px" }}>
-        <img src={loader} alt="Loading ..." style={{ opacity: 0.5 }} />
+      <div className='container text-center ' style={{ marginTop: '100px' }}>
+        <img src={loader} alt='Loading ...' style={{ opacity: 0.5 }} />
       </div>
     );
   }
@@ -114,20 +110,18 @@ const PostDetail = () => {
 
   if (error) {
     return (
-      <div className="container d-flex">
-        <div className="card card-data flex-grow-1 align-items-center">
-          <marquee>
-            <img
-              src={errorSymbol}
-              alt="Loading ... "
-              style={{ opacity: 0.5 }}
-            />
-            {error}
-          </marquee>
+      <div className='container d-flex'>
+        <div className='card card-data flex-grow-1 align-items-center'>
+          <img
+            src={errorSymbol}
+            alt='errorSymbol ... '
+            style={{ opacity: 0.5 }}
+          />
+          {error}
         </div>
         <button
-          className=" float-end m-3 btn btn-primary"
-          onClick={() => navigate("/posts")}
+          className=' float-end m-3 btn btn-primary'
+          onClick={() => navigate('/posts')}
         >
           Back to post page
         </button>
@@ -136,43 +130,43 @@ const PostDetail = () => {
   }
 
   return (
-    <div className="container-fluid">
+    <div className='container-fluid'>
       <button
-        className="float-end btn btn-primary"
-        style={{ margin: "80px 4px 40px 0px" }}
-        onClick={() => navigate("/posts")}
+        className='float-end btn btn-primary'
+        style={{ margin: '80px 4px 40px 0px' }}
+        onClick={() => navigate('/posts')}
       >
         Back to page
       </button>
-      <div className="card card-data w-100">
+      <div className='card card-data w-100'>
         {/* Display post data ... */}
         {postData && (
-          <div className="postData-detail m-3 p-3 w-100">
-            <button className="btn btn-primary float-end my-2">
-              <a href="#addComment" className="text-white text-decoration-none">
+          <div className='postData-detail m-3 p-3 w-100'>
+            <button className='btn btn-primary float-end my-2'>
+              <a href='#addComment' className='text-white text-decoration-none'>
                 Add comment
               </a>
             </button>
-            <div className="post-content card-body mt-5">
-              <h4 className="post-heading card-title">
+            <div className='post-content card-body mt-5'>
+              <h4 className='post-heading card-title'>
                 {postData.id}. {postData.title}
               </h4>
-              <div className="card-text">{postData.body}</div>
+              <div className='card-text'>{postData.body}</div>
             </div>
 
             {/* Display comment data  ... */}
 
-            <h4 className="ps-3 mb-4">Comments</h4>
+            <h4 className='ps-3 mb-4'>Comments</h4>
             {commentsData && commentsData.length > 0 ? (
               commentsData.map((comment) => (
-                <div key={comment.id} className="comment-data ms-3 my-3">
-                  <div className="card-body">
-                    <i className="fa fa-comment me-3"></i>
+                <div key={comment.id} className='comment-data ms-3 my-3'>
+                  <div className='card-body'>
+                    <i className='fa fa-comment me-3'></i>
                     {comment.id}.
                     {editedCommentFormData.editedCommentIndex === comment.id ? (
                       <input
-                        type="text"
-                        className="form-control w-75 d-inline ms-3"
+                        type='text'
+                        className='form-control w-75 d-inline ms-3'
                         value={editedCommentFormData.editedCommentData}
                         onChange={(e) =>
                           setEditedCommentFormData({
@@ -188,12 +182,12 @@ const PostDetail = () => {
                     {/* Edit and save btn for comment ...*/}
                     {editedCommentFormData.editedCommentIndex !== comment.id ? (
                       <i
-                        className="fa fa-edit comment-edit-btn"
+                        className='fa fa-edit comment-edit-btn'
                         onClick={(event) => handleEditComment(event, comment)}
                       ></i>
                     ) : (
                       <i
-                        className="fa fa-save comment-edit-btn"
+                        className='fa fa-save comment-edit-btn'
                         onClick={(event) =>
                           handleSaveComment(event, comment.id)
                         }
@@ -201,23 +195,23 @@ const PostDetail = () => {
                     )}
                     {/* Delete btn for comment ... */}
                     <i
-                      className="fa fa-trash comment-trash-btn"
+                      className='fa fa-trash comment-trash-btn'
                       onClick={() => handleDeleteComment(comment.id)}
                     ></i>
                   </div>
-                  <div className="card-footer text-end">
-                    - Comment by{" "}
-                    {comment.user ? comment.user.username : "Unknown User"}
+                  <div className='card-footer text-end'>
+                    - Comment by{' '}
+                    {comment.user ? comment.user.username : 'Unknown User'}
                   </div>
                 </div>
               ))
             ) : (
-              <div className="comment-data ms-3 my-3">
-                <div className="card-body">No comments available.</div>
+              <div className='comment-data ms-3 my-3'>
+                <div className='card-body'>No comments available.</div>
               </div>
             )}
 
-            <div className="postUser-name card-footer text-end">
+            <div className='postUser-name card-footer text-end'>
               <b>- Post by {postData.username}</b>
             </div>
           </div>
@@ -226,7 +220,7 @@ const PostDetail = () => {
 
       {/* Add comment ... */}
 
-      <div id="addComment">
+      <div id='addComment'>
         <AddComments
           handleAddComment={handleAddComment}
           disable={submitBtnDisable}

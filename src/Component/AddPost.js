@@ -13,7 +13,7 @@ const Addpost = ({ onAddPost }) => {
     }));
   };
 
-  const hadndlePostData = (event) => {
+  const handlePostData = (event) => {
     event.preventDefault();
     onAddPost(formData);
     setFormData({ postTitle: "", postBody: "" });
@@ -23,7 +23,7 @@ const Addpost = ({ onAddPost }) => {
     <div className="container">
       <div className="add-post p-3 m-3">
         <h5 className="text-decoration-underline">Add posts !!</h5>
-        <form className="d-flex align-items-center" onSubmit={hadndlePostData}>
+        <form className="d-flex align-items-center" onSubmit={handlePostData}>
           <div className="d-flex flex-grow-1 align-items-center">
             <label htmlFor="title" className="fs-4 ">
               Title :

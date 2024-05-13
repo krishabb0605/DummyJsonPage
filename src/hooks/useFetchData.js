@@ -12,7 +12,6 @@ const useFetchData = (handleFetchData, params) => {
         setData(fetchedData);
       } catch (error) {
         setError("Error while fetching data");
-        console.log("Error : ", error);
       }
       setIsLoading(false);
     }

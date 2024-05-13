@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import loader from "./Images/Rounded blocks.gif";
-import errorSymbol from "./Images/Error.gif";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import loader from './Images/Rounded blocks.gif';
+import errorSymbol from './Images/Error.gif';
+import dataNotFound from './Images/dataNotFound.png';
+
 import {
   getAllUsersData,
   searchUsersDataByQuery,
-} from "../services/users.service";
-import useFetchData from "../hooks/useFetchData";
+} from '../services/users.service';
+import useFetchData from '../hooks/useFetchData';
 
 function User() {
   const navigate = useNavigate();
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Navigate to userdetail page ...
 
@@ -44,8 +46,8 @@ function User() {
 
   if (isLoading) {
     return (
-      <div className="container text-center " style={{ marginTop: "100px" }}>
-        <img src={loader} alt="Loading ... " style={{ opacity: 0.5 }} />
+      <div className='container text-center ' style={{ marginTop: '100px' }}>
+        <img src={loader} alt='Loading ... ' style={{ opacity: 0.5 }} />
       </div>
     );
   }
@@ -53,29 +55,27 @@ function User() {
 
   if (error) {
     return (
-      <div className="container">
-        <div className="card card-data">
-          <marquee>
+      <div className='container'>
+        <div className='card card-data'>
             <img
               src={errorSymbol}
-              alt="Loading ... "
+              alt='error ... '
               style={{ opacity: 0.5 }}
             />
             {error}
-          </marquee>
         </div>
       </div>
     );
   }
   return (
-    <div className="container-fluid p-0">
-      <div className="d-flex justify-content-between main-header">
-        <div className="search-header">
-          <i className="fa fa-search search-icon"></i>
+    <div className='container-fluid'>
+      <div className='d-flex justify-content-between main-header'>
+        <div className='search-header'>
+          <i className='fa fa-search search-icon'></i>
           <input
-            type="text"
-            className="form-control p-3 my-3 search-field"
-            placeholder="Search ..."
+            type='text'
+            className='form-control p-2 my-3 search-field'
+            placeholder='Search ...'
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             autoFocus
@@ -83,8 +83,13 @@ function User() {
         </div>
       </div>
       <div
-        className="card card-data justify-content-around w-100 "
-        style={{ marginTop: "56px" }}
+        className='card card-data justify-content-around w-100 '
+        style={{
+          marginTop: '60px',
+          maxHeight: 'calc(100vh - 140px)',
+          overflow: 'auto',
+          scrollbarWidth: 'thin',
+        }}
       >
         {/* Display user data ... */}
         {(usersData || []) &&
@@ -92,30 +97,35 @@ function User() {
             // Onclick navigate to userdetail page ...
             <div
               key={index}
-              className="user-data m-3 p-3 pb-0 d-flex justify-content-center"
+              className='user-data m-2 p-3 pb-0 d-flex justify-content-center'
               onClick={() => userDetail(userdata.id)}
             >
-              <div className="user-photo d-flex align-items-center h-100">
+              <div className='user-photo d-flex align-items-center h-100'>
                 <img
                   src={userdata.image}
-                  alt="UserImage"
-                  className="h-75 user-image"
+                  alt='UserImage'
+                  className='h-75 user-image'
                 />
               </div>
-              <div className="align-self-center">
-                <h4 className="userName">
-                  <i className="fa fa-user me-2"></i>
+              <div className='align-self-center'>
+                <h4 className='userName'>
+                  <i className='fa fa-user me-2'></i>
                   {userdata.id} {userdata.firstName} {userdata.lastName}
                 </h4>
-                <i className="fa fa-phone me-2"></i>
+                <i className='fa fa-phone me-2'></i>
                 <i>{userdata.phone}</i>
                 <br />
-                <i className="fa fa-envelope-open me-2"></i>
+                <i className='fa fa-envelope-open me-2'></i>
                 <i>{userdata.email}</i>
               </div>
             </div>
           ))}
       </div>
+      {usersData.length === 0 && (
+        <div className='d-flex justify-content-center my-5'>
+          <img src={dataNotFound} alt='no data found' />
+        </div>
+      )}
     </div>
   );
 }

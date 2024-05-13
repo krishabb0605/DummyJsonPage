@@ -1,15 +1,15 @@
 export const getAllPostData = async () => {
   const responseOfPostData = await fetch(
-    "https://dummyjson.com/posts?limit=150"
+    'https://dummyjson.com/posts?limit=150'
   );
   const postData = await responseOfPostData.json();
   return postData.posts;
 };
 
 export const addPost = async (postDetail) => {
-  const responseOfPosts = await fetch("https://dummyjson.com/posts/add", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+  const responseOfPosts = await fetch('https://dummyjson.com/posts/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       title: postDetail.postTitle,
       body: postDetail.postBody,
@@ -17,20 +17,20 @@ export const addPost = async (postDetail) => {
     }),
   });
   const newPost = await responseOfPosts.json();
-  newPost.username = "Krisha";
+  // newPost.username = "Krisha";
   return newPost;
 };
 
 export const deletePost = async (postId) => {
   fetch(`https://dummyjson.com/posts/${postId}`, {
-    method: "DELETE",
+    method: 'DELETE',
   });
 };
 
 export const saveEditedPostData = async (editedFormData, postId, postsData) => {
   await fetch(`https://dummyjson.com/posts/${postId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       title: editedFormData.postTitle,
       body: editedFormData.postBody,
